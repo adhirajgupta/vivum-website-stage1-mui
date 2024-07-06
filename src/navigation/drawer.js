@@ -8,18 +8,16 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link, Outlet } from 'react-router-dom';
 import DrawerItem from './components/drawerItem';
+import DrawerAvatar from './components/drawerAvatar';
 
 const drawerWidth = 240;
+const appBarHeight = 64; // Default height of AppBar
 
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -41,27 +39,26 @@ function ResponsiveDrawer(props) {
     }
   };
 
-const drawer = (
-  <div>
-    <Toolbar />
-    <Divider />
-    <List>
-      <DrawerItem
-        text="Dashboard"
-        to="/dashboard"
-        icon={<InboxIcon />}
-        onClick={() => console.log('Dashboard Pressed')}
-      />
-      <DrawerItem
-        text="Events"
-        to="/events"
-        icon={<MailIcon />}
-        onClick={() => console.log('Events Pressed')}
-      />
-    </List>
-  </div>
-);
-
+  const drawer = (
+    <div>
+      <DrawerAvatar/>
+      <Divider />
+      <List>
+        <DrawerItem
+          text="Dashboard"
+          to="/dashboard"
+          icon={<InboxIcon />}
+          onClick={() => console.log('Dashboard Pressed')}
+        />
+        <DrawerItem
+          text="Events"
+          to="/events"
+          icon={<MailIcon />}
+          onClick={() => console.log('Events Pressed')}
+        />
+      </List>
+    </div>
+  );
 
   // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -87,7 +84,7 @@ const drawer = (
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Vivum 24'
           </Typography>
         </Toolbar>
       </AppBar>
@@ -108,23 +105,30 @@ const drawer = (
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, },
           }}
         >
+
           {drawer}
         </Drawer>
         <Drawer
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, },
           }}
           open
         >
           {drawer}
         </Drawer>
       </Box>
-      <Outlet />
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` },  }}
+      >
+        <Toolbar />
+        <Outlet />
+      </Box>
     </Box>
   );
 }

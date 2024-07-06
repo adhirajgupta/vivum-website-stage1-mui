@@ -123,12 +123,14 @@ export default function SignInSide() {
 
                     console.log("pressed")
 
-                    // let endpoint = "https://adityaiyer2k7.pythonanywhere.com/userdata/";
+                    let endpoint = "https://adityaiyer2k7.pythonanywhere.com/userdata/login?userid=iaditya&pwdh=abcdef";
                     // let userid = "iaditya";
                     // let pwdh = encryption("abcde");
                     // console.log(pwdh)
 
-
+                    fetch(endpoint).then((res) => {
+                      console.log(res.json())
+                    })
                     // fetch(endpoint + `?userid=${userid}&pwdh=${pwdh}`)
                   }}
                 >

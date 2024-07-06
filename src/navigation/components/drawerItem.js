@@ -8,14 +8,14 @@ import ListItemText from '@mui/material/ListItemText';
 
 const DrawerItem = ({ text, to, icon, onClick }) => {
   return (
-    <ListItem disablePadding>
       <Link to={to} style={{ textDecoration: 'none', color: 'black' }}>
+    <ListItem disablePadding>
         <ListItemButton onClick={onClick}>
           <ListItemIcon>{icon}</ListItemIcon>
           <ListItemText primary={text} />
         </ListItemButton>
-      </Link>
     </ListItem>
+      </Link>
   );
 };
 

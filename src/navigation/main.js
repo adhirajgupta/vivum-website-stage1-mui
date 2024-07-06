@@ -6,13 +6,14 @@ import {
   Route,
   Navigate,
   Outlet,
-  useNavigate
+  useNavigate,
 } from 'react-router-dom';
 import SignInSide from '../screens/SignInScreen';
 import SignUp from '../screens/SignUpScreen';
 import ResponsiveDrawer from './drawer';
 import { Dashboard } from '../screens/DashboardScreen';
 import { Events } from '../screens/EventsScreen';
+import { Home } from '../screens/HomeScreen';
 
 const isAuthenticated = () => {
   // Add your authentication logic here
@@ -23,6 +24,20 @@ const isAuthenticated = () => {
 const ProtectedRoute = ({ children }) => {
   return isAuthenticated() ? children : <Navigate to="/login" />;
 };
+
+const ErrorPage = () => {
+    console.log("exec")
+    const navigate = useNavigate()
+  const changePath = () => {
+    navigate('/dashboard')
+  }
+ 
+  return (
+    <Navigate to="/login" />
+  );
+
+}
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -42,10 +57,6 @@ const Login = () => {
 };
 
 
-
-const Home = () => {
-  return <h2>Home</h2>;
-};
 
 const Main = () => {
   return (
@@ -71,13 +82,15 @@ const Main = () => {
             </ProtectedRoute>
           }
         /> */}
-        <Route path='/auth'>
-            <Route path='/auth/login' element={<SignInSide/>}/>
-            <Route path='/auth/signup' element={<SignUp/>}/>
+        <Route path='/auth' errorElement={<ErrorPage/>}>
+            <Route path='/auth/login' element={<SignInSide/>} errorElement={<ErrorPage/>}/>
+            <Route path='/auth/signup' element={<SignUp/>} errorElement={<ErrorPage/>}/>
         </Route>
-        <Route path='/' element={<ResponsiveDrawer/>}>
-            <Route path='/dashboard' element={<Dashboard/>} />
-            <Route path='/events' element={<Events/>}/>
+        <Route path='/' element={<ResponsiveDrawer/>} errorElement={<ErrorPage/>}>
+            <Route path='/dashboard' element={<Dashboard/>} errorElement={<ErrorPage/>}/>
+            <Route path='/events' element={<Events/>} errorElement={<ErrorPage/>}/>
+                        <Route path='/home' element={<Home/>} errorElement={<ErrorPage/>}/>
+
         </Route>
       </Routes>
     </Router>
